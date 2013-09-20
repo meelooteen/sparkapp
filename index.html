@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="msapplication-tap-highlight" content="no">
+	<title>Spark.me</title>
+	<link rel="stylesheet" href="chui.ios-3.0.2.min.css">
+	<style>
+	
+	 section ul:not(.preskoci) li img
+	{
+		width:75px;
+		height:90px;
+		/*	-webkit-backface-visibility: hidden;
+-webkit-perspective: 1000;
+backface-visibility: hidden;
+perspective: 1000;*/
+		
+	}
+	
+	
+	
+	.fps section
+	{
+		-webkit-backface-visibility: hidden;
+-webkit-perspective: 1000;
+	}
+		.icon {
+			height: 40px;
+			width: 40px;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-size: auto 70%;
+		}
+		.icon.weather {
+			background-color: #29abe2;
+			background-image: url(images/app-icons/weather.png);
+			background-size: 70% auto;
+		}
+		.icon.mail {
+			background-color: #52c5d0;
+			background-image: url(images/app-icons/mail.png);
+			background-size: 70% auto;
+		}
+		.icon.music {
+			background-color: #f38133;
+			background-image: url(images/app-icons/music.png);
+		}
+		.icon.browser {
+			background-color: #ed453a;
+			background-image: url(images/app-icons/browser.png);
+		}
+		.icon.app {
+			background-color: #6ec05c;
+			background-image: url(images/app-icons/app.png);
+		}
+		/* Border Radius for each OS: */
+		.isiOS .icon {
+			border-radius: 10px;
+		}
+		.isAndroid .icon {
+			border-radius: 50%;
+		}
+		.isWin .icon {
+			border-radius: 0;
+		}
+		
+		/* Popup Demo Styles */
+		#popupMessageTarget {
+			opacity: 0;
+			font-size: 12pt;
+			line-height: 14pt;
+			font-family: 'HelveticaNeue-Light';
+			color: #007aff;
+			padding: 0 15px;
+			margin: 0;
+		}
+		.animatePopupMessage {
+			-webkit-animation-duration: 2s;
+			-webkit-animation-timing-function: linear;
+			-webkit-animation-name: updatePopupMessage;
+		}
+		
+		@-webkit-keyframes updatePopupMessage {
+			0% { opacity: 0; }
+			20% { opacity: 1; }
+			90% { opacity: 1; }
+			100% { opacity: 0; }
+		}
+		.popover-buttons {
+			margin-bottom: 20px;
+			padding: 0 40px;
+		}
+		.popover-buttons > .button {
+			display: -webkit-box;
+			display: -webkit-flex;
+			border: solid 1px #007aff;
+			padding: 4px 15px;
+			border-left: none;
+			background-color: rgba(255,255,255,.65);
+			width: auto;
+			overflow-x: hidden;
+			-webkit-transition: none;
+			transition: none;
+			font-size: 10pt;
+			-webkit-box-align: center;
+			-webkit-box-pack: center;
+			-webkit-box-flex: 1;
+			-wekbit-flex: 1;
+			text-align: center;
+		}
+		
+		.popover-buttons > .button:first-of-type {
+			border-left: solid 1px #007aff;
+			border-top-left-radius: 4px;
+			border-bottom-left-radius: 4px;
+		}
+		.popover-buttons > .button:last-of-type {
+			border-top-right-radius: 4px;
+			border-bottom-right-radius: 4px;
+		}
+		.popover-buttons > .button:hover {
+			color: #fff;
+   		background-color: #007aff;
+		}
+	</style>
+	<script src="chocolatechip-3.0.2.min.js"></script>
+	<script src="chui-3.0.2.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#ikonicaagenda").on('singletap',function()
+		{
+			$.UIGoToArticle('#agenda');
+		});
+		
+		$("#ikonicaspeakers").on('singletap',function()
+		{
+			$.UIGoToArticle('#speakers');
+		});
+		
+			$("#ikonicalokacije").on('singletap',function()
+		{
+			$.UIGoToArticle('#lokacije');
+		});
+		
+			$("#ikonicareasons").on('singletap',function()
+		{
+			$.UIGoToArticle('#reasons');
+		});
+		
+			$("#ikonicastartups").on('singletap',function()
+		{
+			$.UIGoToArticle('#startups');
+		});
+		
+			$("#ikonicapartners").on('singletap',function()
+		{
+			$.UIGoToArticle('#partners');
+		});
+		
+		$('.ikonica').on('doubletap',function()
+		{
+			$(this).trigger( 'singletap' );
+		});
+		
+		$('.ikonica').on('longtap',function()
+		{
+			$(this).trigger( 'singletap' );
+		});
+		
+		$(".nanaslovnu").on('singletap',function()
+		{
+			$.UIGoBackToArticle('#main');
+		});
+		
+		$(".externalLink").on('singletap',function()
+		{
+			var urlg=$(this).attr('data-goToUrl');
+			window.location.href=urlg;
+		});
+		
+		});
+		
+		
+	</script>
+	<style>
+		#select-response,
+		#switch-response,
+		#deletable-response,
+		#fruitsChoice,
+		#desertsChoice {
+			color: #007aff;
+			text-transform: capitalize;
+		}
+		.sheet .button {
+			min-width: 200px;
+			width: 80%;
+		}
+		
+		nav.milutin
+		{
+			background-color:red;
+			color:white;
+			
+		}
+		article.milutin
+		{
+			margin-top:-60px;
+			background:#f0f0f0;
+		}
+		img.ikonica
+		{
+			width:auto;
+			height:auto;
+			max-width:33%;
+			max-height:20%;
+		}
+		.preskoci
+		{
+			text-align:center;
+		}
+		.preskoci img
+		{
+			max-width:100%;
+			height:auto;
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<nav class="current milutin" >
+		<h1>Home</h1>
+	</nav>
+	<article id="main" class="current " style="text-align:center">
+		<section style="padding-top:0; padding-bottom:0;">
+        <img src="spmelogoveci.png" style="height:40%; margin-left:auto; margin-right:auto; width:auto;"/>
+           <br>
+<img id="ikonicaagenda" src="icon-agenda.png"  class="ikonica" />
+            <img id="ikonicaspeakers" src="icon-speakers.png"  class="ikonica"/>
+            <img id="ikonicalokacije" src="icon-locations.png"  class="ikonica"/><br>
+            <img id="ikonicareasons" src="icon-reasons.png"  class="ikonica"/>
+            <img id="ikonicastartups" src="icon-startups.png"  class="ikonica"/>
+            <img id="ikonicapartners" src="icon-partners.png"  class="ikonica"/>
+		<!--	<ul class='list'><br>
+         
+				<li data-goto="agenda" class='nav'>
+					<h3>Agenda</h3>
+				</li>
+				<li data-goto="select-article" class='nav'>
+					<h3>Speakers</h3>
+				</li>
+				<li data-goto="deletable-article" class='nav'>
+					<h3>Locations</h3>
+				</li>
+				<li data-goto="popup-article" class='nav'>
+					<h3>Reasons</h3>
+				</li>
+				<li data-goto="popover-article" class='nav'>
+					<h3>Startups</h3>
+				</li>
+				<li data-goto="sheet-article" class='nav'>
+					<h3>Partners</h3>
+				</li>
+				
+			</ul>--> 
+		</section>
+	</article>
+	<nav>
+		<a class='button backTo nanaslovnu'>Back</a>
+		<h1>Agenda</h1>
+	</nav>
+	<article id='agenda' class='next fps'>
+		<section>
+        <h2>Thursday, 26.09.</h2>
+			<ul class='list'>
+            <li class='comp'>
+            <aside><img src="slike/registration.png"/></aside>
+            <div>
+            <h4>09:00-10:00</h4>
+            <h3>Registration</h3>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/opening.png"/></aside><div>
+            <h4>10:00-10:15</h4>
+            <h3>opening</h3></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/eli-opper-270x320.png"/></aside><div>
+            <h4>10:15-11:00</h4>
+            <h3>R&D, Innovation, Entrepreneurship, Leonardo de Vinci and the modern economy</h3>
+            <h4>Dr. Eli Opper - Ministry of science Israel</h4></div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/ryan-fujiu-270x320.png"/></aside><div>
+            <h4>11:00-11:45</h4>
+            <h3>Building what people want</h3>
+            <h4>Ryan Fujiu - About.Me</h4></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/biggs-270x320.png"/></aside><div>
+            <h4>11:45-12:30</h4>
+            <h3>Escape the black hole</h3>
+            <h4>John Biggs - Techcrunch</h4></div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="lunch.png"/></aside><div>
+            <h4>13:15-14:15</h4>
+            <h3>Lunch</h3>
+          </div>
+            </li>
+            
+            
+             <li class='comp'>
+            <aside><img src="slike/monty-metzger-270x320.png"/></aside><div>
+            <h4>14:15-15:00</h4>
+            <h3>Digital Trends</h3>
+            <h4>Monty Metzger - Business Angel</h4></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/panel.png"/></aside><div>
+            <h4>14:15-15:00</h4>
+            <h3>Panel - StartUp community - the driving force</h3>
+            <h4>Vukasin Stojkov - Startit.rs, Maxim Gurwits - Eleven, Ivo Spigel - ZIP</h4></div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/ivor-bihar-270x320.png"/></aside><div>
+            <h4>15:45-16:45</h4>
+            <h3>Social media ROI for media websites</h3>
+            <h4>Ivor Bihar - iStudio</h4></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/coffee.png"/></aside><div>
+            <h4>16:45-17:00</h4>
+            <h3>Cofee break</h3><div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/startup-comp.png"/></aside><div>
+            <h4>17:00-18:30</h4>
+            <h3>Startup Competition</h3><div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/coctail.png"/></aside><div>
+            <h4>20:00</h4>
+            <h3>Cocktail</h3><div>
+            </li>
+            
+            
+            </ul>
+            
+            
+                    <h2>Friday, 27.09.</h2>
+				<ul class='list'>
+            
+            <li class='comp'>
+            <aside><img src="slike/balaji-bal-270x320.png"/></aside><div>
+            <h4>10:15-11:00</h4>
+            <h3>Light speed engineering: lessons from building big products fast</h3>
+            <h4>Bal Balaji - Bal Lab</h4></div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/chris270x320.png"/> </aside><div>
+            <h4>11:00-11:45</h4>
+            <h3>Dropbox: A view from the inside</h3>
+            <h4>Chris Varenhorst - Dropbox</h4></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/steve-keil-270x320.png"/></aside><div>
+            <h4>11:45-12:30</h4>
+            <h3>A manifesto for play</h3>
+            <h4>Steve Keil - TED speaker</h4></div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/meelik-gornoi-270x320.png"/></aside><div>
+            <h4>12:30-13:15</h4>
+            <h3>Skype - the past, the present and the future</h3>
+            <h4>Meelik Gornoi - Skype</h4></div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="lunch.png"/></aside><div>
+            <h4>13:15-14:15</h4>
+            <h3>Lunch</h3>
+          </div>
+            </li>
+            
+            
+             <li class='comp'>
+            <aside><img src="slike/rob-hinchcliffe-270x320.png"/></aside><div>
+            <h4>14:15-15:00</h4>
+          <h3>The changing nature of 'content'</h3>
+            <h4>Rob Hinchliffe - Rushmore.fm</h4></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/panel.png"/></aside><div>
+            <h4>15:00-15:45</h4>
+            <h3>Panel - The good, the bad and the ugly of starting a StartUP</h3>
+            <h4>Nikola Sologub - Homepage.rs, Marcin Zmacinski - Web.me, Danica Radišić</h4></div>
+            </li>
+           
+            
+             <li class='comp'>
+            <aside><img src="slike/gaga-270x320.png"/></aside><div>
+            <h4>15:45-16:45</h4>
+            <h3>New business models: mountain or grain of sand</h3>
+            <h4>Dragana Djermanovic - PRPepper</h4></div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/coffee.png"/></aside><div>
+            <h4>16:45-17:00</h4>
+            <h3>Cofee break</h3><div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/startup-comp.png"/></aside><div>
+            <h4>17:00-18:30</h4>
+            <h3>Startup Competition/Closing</h3><div>
+            </li>
+            
+         
+            
+            
+            </ul>
+            
+            
+		</section>
+	</article>
+	<nav>
+		<a class='button backTo nanaslovnu'>Back</a>
+		<h1>Locations (online)</h1>
+	</nav>
+	<article id='lokacije' class='next fps'>
+		<section>
+        <h2 style="opacity:.5">Requires internet connection</h2>
+			<ul class='list '>
+				<li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=42.282262,18.865797&aq=&sll=42.282215,18.865732&sspn=0.008271,0.01929&vpsrc=0&ie=UTF8&ll=42.282262,18.8658&spn=0.008271,0.01929&t=m&z=16&iwloc=A">
+					<h3>Spark.me conference</h3>
+                    <h4>Hotel Splendid</h4>
+				</li>
+				<li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=stari+grad+budva&aq=&sll=-65.079012,-142.318488&sspn=0.000589,0.002411&vpsrc=0&ie=UTF8&hq=&hnear=Old+Town,+Budva,+Montenegro&t=m&z=16">
+					<h3>Stari grad Budva</h3>
+                    <h4>Old Town</h4>
+				</li>
+				</li>
+				<li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Kuzina+budva&aq=&sll=42.277844,18.838067&sspn=0.008272,0.01929&vpsrc=0&g=stari+grad+budva&ie=UTF8&hq=&hnear=&ll=42.293358,18.848183&spn=0.00827,0.01929&t=m&z=16&iwloc=A&cid=3205847634534300691">
+					<h3>Kuzina</h3>
+                    <h4>BBQ joint and restaurant</h4>
+				</li>
+				<li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Hotel+Mediteran,+E65,+Boreti,+Budva,+Montenegro&aq=0&oq=Hotel+mediteran+budva&sll=42.293358,18.848183&sspn=0.00827,0.01929&vpsrc=0&ie=UTF8&hq=Hotel+Mediteran,&hnear=E65,+Montenegro&t=m&z=16&cid=12906238825001332207&iwloc=A">
+					<h3>Hotel Mediteran</h3>
+                    <h4>Becici</h4>
+				</li>
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=The+Queen+Of+Montenegro,+Be%C4%8Di%C4%87i,+Montenegro&aq=0&oq=queen+of+montene&sll=42.283548,18.863869&sspn=0.008271,0.01929&vpsrc=0&ie=UTF8&hq=&hnear=&ll=42.282722,18.877473&spn=0.008271,0.01929&t=m&z=16&iwloc=A&cid=3154609854566242837">
+					<h3>The Queen of Montenegro</h3>
+                    <h4>Hotel, Budva</h4>
+				</li>
+                
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&oq=hotel+milocer&sll=42.282262,18.8658&sspn=0.008271,0.01929&vpsrc=0&g=42.282262,18.865797&ie=UTF8&hq=hotel&hnear=Milocer+beach&t=m&cid=17632538606558852336&z=14&iwloc=A">
+					<h3>Hotel Residence Milocer</h3>
+                    <h4>Resort</h4>
+				</li>
+                
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Slovenska+Pla%C5%BEa+Hotel+Complex,+E65,+Budva,+Montenegro&aq=1&oq=slovenska+pla&sll=42.272482,18.895626&sspn=0.033089,0.077162&vpsrc=0&ie=UTF8&hq=&hnear=&ll=42.288405,18.846617&spn=0.00827,0.01929&t=m&z=16&iwloc=A&cid=863194173678224551">
+					<h3>Slovenska Plaza Hotel</h3>
+                    <h4>Resort and housing development</h4>
+				</li>
+                
+                     <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=+ACD,Montenegro&aq=&sll=42.28527,18.863184&sspn=0.033082,0.077162&vpsrc=0&ie=UTF8&hq=ACD,Montenegro&hnear=&ll=42.285247,18.871593&spn=0.033082,0.077162&t=m&z=14&iwloc=A&cid=17272928025695656961">
+					<h3>Villa ACD</h3>
+                    <h4>Bed&amp;Breakfast</h4>
+				</li>
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Bus+Station+Budva,+Budva,+Montenegro&aq=0&oq=bus+station+&sll=42.285247,18.871593&sspn=0.033082,0.077162&vpsrc=0&ie=UTF8&hq=&hnear=Bus+Station+Budva,+Budva,+Montenegro&t=m&z=16&iwloc=A">
+					<h3>Bus station</h3>
+                    <h4>Budva</h4>
+				</li>
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Tivat+Airport,+2,+Tivat,+Montenegro&aq=0&oq=airport+tivat&sll=42.290167,18.839064&sspn=0.00827,0.01929&vpsrc=0&g=Bus+Station+Budva,+Budva,+Montenegro&ie=UTF8&hq=Tivat+Airport,+2,+Tivat,+Montenegro&ll=42.407488,18.724566&spn=0.033018,0.077162&t=m&z=14&iwloc=A&cid=8080717607806796232">
+					<h3>Airport</h3>
+                    <h4>Tivat</h4>
+				</li>
+                
+                 <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Podgorica+Airport,+Golubovci+Urban+Municipality,+Podgorica,+Montenegro&aq=0&oq=podgorica+air&sll=42.407488,18.724566&sspn=0.033018,0.077162&vpsrc=0&ie=UTF8&hq=Podgorica+Airport,+Golubovci+Urban+Municipality,+Podgorica,+Montenegro&ll=42.365267,19.250793&spn=0.066081,0.154324&t=m&z=13&iwloc=A&cid=11220375120265908141">
+					<h3>Airport</h3>
+                    <h4>Podgorica</h4>
+				</li>
+                
+                 <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=porto+restaurant+budva&aq=&sll=42.280008,18.884339&sspn=0.013701,0.033023&vpsrc=0&ie=UTF8&hq=porto+restaurant&hnear=Budva,+Montenegro&ll=42.241481,18.949699&spn=0.219347,0.528374&t=m&z=12&iwloc=A&cid=4377257632179598663">
+					<h3>Porto Restaurant</h3>
+                    <h4>Mediterranean restaurant, Budva</h4>
+				</li>
+                
+                 <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=jadran+restaurant+budva&aq=&sll=42.641465,18.107524&sspn=0.984945,2.113495&vpsrc=0&ie=UTF8&hq=jadran+restaurant&hnear=Budva,+Montenegro&t=m&z=16&iwloc=A&cid=11537742399516081575">
+					<h3>Jadran Restaurant</h3>
+                    <h4>Mediterranean restaurant and pub, Budva</h4>
+				</li>
+                                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=Mogren+beach,+Budva,+Montenegro&aq=0&oq=mogren+beac+budva&sll=42.28131,18.837701&sspn=0.015479,0.033023&vpsrc=0&ie=UTF8&hq=&hnear=Mogren+beach&t=m&z=17&iwloc=A">
+					<h3>Mogren</h3>
+                    <h4>Beach in Budva</h4>
+				</li>
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=stari+grad+budva&aq=&sll=-65.079012,-142.318488&sspn=0.000589,0.002411&vpsrc=0&ie=UTF8&hq=&hnear=Old+Town,+Budva,+Montenegro&t=m&z=16">
+					<h3>Fortress walls</h3>
+                    <h4>Scenic lookout, Budva</h4>
+				</li>
+                
+                <li class='nav externalLink' data-goToUrl="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=42.282262,18.865797&aq=&sll=42.282215,18.865732&sspn=0.008271,0.01929&vpsrc=0&ie=UTF8&ll=42.282262,18.8658&spn=0.008271,0.01929&t=m&z=16&iwloc=A">
+					<h3>Casino Royal</h3>
+                    <h4>Hotel Splendid, Budva</h4>
+				</li>
+                
+
+			</ul>
+			
+		</section>
+	</article>
+	<nav>
+		<a class='button backTo nanaslovnu'>Back</a>
+		<h1>Speakers</h1>
+	</nav>
+	<article id='speakers' class='next fps'>
+		<section>
+        <ul class='list'>
+          <li class='comp'>
+            <aside><img src="slike/vukasin-stojkov-270x320.png"/></aside>
+            <div>
+            <h3>Vukasin Stojkov</h3>
+            <h4>TruckTrack</h4>
+            <p>
+            An activist, an entrepreneur and a designer. He recently went full-time entrepreneur and co-founded TruckTrack, an un-sexy startup for trucking businesses.
+            </p>
+            </div>
+            </li>
+            
+            
+             <li class='comp'>
+            <aside><img src="slike/steve-keil-270x320.png"/></aside>
+            <div>
+            <h3>Steve Keil</h3>
+            <h4>@sgkeil</h4>
+            <p>
+            An entrepreneur whose passion is to create companies in which people are inspired to make their mark with their ideas and imagination.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/ryan-fujiu-270x320.png"/></aside>
+            <div>
+            <h3>Ryan Fujiu</h3>
+            <h4>About.me</h4>
+            <p>
+            Head of Growth at About.me, where he founded the team responsible for new user activation, acquisition, engagement and retention.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/rob-hinchcliffe-270x320.png"/></aside>
+            <div>
+            <h3>Rob Hinchcliffe</h3>
+            <h4>Rushmore.fm</h4>
+            <p>
+            Rob Hinchcliffe has been building online communities since 2003, when he founded the collaborative blog Londonist, which became one of the most widely read blogs in the country and was voted one of the top 10 most influential blogs in the UK.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/nikola-sologub-270x320.png"/></aside>
+            <div>
+            <h3>Nikola Sologub</h3>
+            <h4>homepage.rs</h4>
+            <p>
+            Nikola Sologub is a Web addict, digital marketing entrepreneur, managing director at Homepage. With strong background in web development and social media marketing, Nikola brings great user experience into innovative projects.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/monty-metzger-270x320.png"/></aside>
+            <div>
+            <h3>Monty Metzger</h3>
+            <h4>@montymetzger</h4>
+            <p>
+            Serial Entrepreneur, Investment Advisor, Business Angel, Passionate Trend Spotter and a Loving Dad & Husband.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/meelik-gornoi-270x320.png"/></aside>
+            <div>
+            <h3>Meelik Gornoi</h3>
+            <h4>Skype</h4>
+            <p>
+           Has been building up Skype desktop and web clients testing teams and now leading a team of 60+ professionals.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/maxim-gurvits-270x320.png"/></aside>
+            <div>
+            <h3>Maxim Gurvits</h3>
+            <h4>Eleven</h4>
+            <p>
+           Chief hustler and resident evangelist at Eleven Startup Accelerator, a EUR 12m acceleration and seed fund based in Sofia.
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/marcin-zmaczynski-270x320.png"/></aside>
+            <div>
+            <h3>Marcin Zmaczynski</h3>
+            <h4>in/mzmaczynski</h4>
+            <p>
+            Marcin Zmaczynski is a true enthusiast of wide IT and new mobile technologies. He really enjoys to be a part of IT branch and gets a lots of satisfaction to make EMEA IT market more friendly for users
+            </p>
+            </div>
+            </li>
+             <li class='comp'>
+            <aside><img src="slike/biggs-270x320.png"/></aside>
+            <div>
+            <h3>John Biggs</h3>
+            <h4>@JohnBiggs</h4>
+            <p>
+           John Biggs writes about technology, security, gadgets, gear, wristwatches, and the Internet. After spending four years as an IT programmer, he switched gears and became a full-time journalist.
+            </p>
+            </div>
+            </li>
+             <li class='comp'>
+            <aside><img src="slike/ivor-bihar-270x320.png"/></aside>
+            <div>
+            <h3>Ivor Bihar</h3>
+            <h4>iStudio.hr</h4>
+            <p>
+            Ivor Bihar is a product Manager of Mediatoolkit at iSTUDIO – performance marketing agency, Facebook PMD and Google Certified Partner
+            </p>
+            </div>
+            </li>
+            
+             <li class='comp'>
+            <aside><img src="slike/ivo-spigel-270x320.png"/></aside>
+            <div>
+            <h3>Ivo Špigel</h3>
+            <h4>Perpetuum Mobile d.o.o.</h4>
+            <p>
+            Ivo Špigel is an entrepreneur, startup mentor and writer. He is a cofounder and member of the Board of the Croatian IT solutions company Perpetuum Mobile d.o.o.
+            </p>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/gaga.png"/></aside>
+            <div>
+            <h3>Dragana Djermanovic</h3>
+            <h4>PRpepper</h4>
+            <p>
+            An on-line PR practitioner and lecturer and the owner of a consulting agency PRpepper.
+            </p>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/eli-opper-270x320.png"/></aside>
+            <div>
+            <h3>Dr. Eli Opper</h3>
+            <h4>Chief Scientist at Ministry of Industry</h4>
+            <p>
+            Strategic advisor of companies and organizations on policy in the areas of Technology, R&D, Investments Entrepreneurship and Innovation.
+            </p>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/danica-radisic-270x320.png"/></aside>
+            <div>
+            <h3>Danica Radisic</h3>
+            <h4>Krazy Fish</h4>
+            <p>
+            Danica Radisic, better known as Niki is an integrated corporate communications consultant and serial entrepreneur
+            </p>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/chris-varenhorst-270x320.png"/></aside>
+            <div>
+            <h3>Chris Varenhorst</h3>
+            <h4>DropBox</h4>
+            <p>
+            Software Engineer at Dropbox. A graduate of MIT with a BA in Computer Engineering and a MA in Engineering & Computer Science, he started working at the San Francisco office four days after handing his thesis in.
+            </p>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/bogdan-iordache-270x320.png"/></aside>
+            <div>
+            <h3>Bogdan Iordache</h3>
+            <h4>How to Web</h4>
+            <p>
+           Co-founder of How to Web Conference, Startup Spotlight program, Tech Hub Bucharest and many more. Trekkie, live music addict, in a quest for knowledge.
+            </p>
+            </div>
+            </li>
+            
+            <li class='comp'>
+            <aside><img src="slike/balaji-bal-270x320.png"/></aside>
+            <div>
+            <h3>Bal Balaji</h3>
+            <h4>Bal Lab</h4>
+            <p>
+          A former architect and self-taught programmer Balaji Bal's 16 year entrepreneurial career has spanned both start-ups and turn-arounds.
+            </p>
+            </div>
+            </li>
+            
+            
+            
+            
+            </ul>
+            
+        </ul>
+			
+		</section>
+	</article>
+    
+    <nav>
+		<a class='button backTo nanaslovnu'>Back</a>
+		<h1>Reasons</h1>
+	</nav>
+	<article id='reasons' class='next fps'>
+		<section>
+        <h2>6 Reasons to visit Spark.me</h2>
+        <ul class="list">
+        <li><h3>1.</h3><h4>Learn how to blog or improve your blog performance from the world best bloggers</h4></li>
+         <li><h3>2.</h3><h4>Learn about the future of Social Media</h4></li>
+          <li><h3>3.</h3><h4>Get motivated to jumpstart your business, online and offline</h4></li>
+           <li><h3>4.</h3><h4>Learn about successful startups from the region and what they can offer</h4></li>
+            <li><h3>5.</h3><h4>Spend two days in the best hotel in Montenegro and on the beach</h4></li>
+             <li><h3>6.</h3><h4>Network and talk to some of the best esteemed experts in the industry during coffee breaks and parties</h4></li>
+        </ul>
+        <a href="http://www.spark.me/register/" style="border-radius:16px; text-decoration:none; text-align:center; background:#C30; color:lightgrey; height:55px; line-height:55px; width:97%; display:block; margin:auto; font-size:16px;"> REGISTER NOW </a>
+	
+			
+		</section>
+	</article>
+    
+    
+    
+    
+       <nav>
+		<a class='button backTo nanaslovnu'>Back</a>
+		<h1>Startups</h1>
+	</nav>
+	<article id='startups' class='next fps'>
+		<section>
+       <div style="margin:8px"> <p>
+         ME is proud to announce the 10 StartUps that will present at the HOT Spark.ME stage on September 26 & 27 in Budva, and compete for the trip to TCDisrupt NY, 2014.
+</p><p>
+In addition, each StartUp that made it to this round will have a booth, where they will have a chance to present their product to the conference attendees and distribute promotional material.
+</p><p>
+Huge congrats to the big ten:
+        </p></div>
+	<ul class="list">
+        <li><h4>Jellynote</h4><h3>France</h3></li>
+         <li><h4>DataMaid </h4><h3>Serbia</h3></li>
+          <li><h4>Cruise.me</h4><h3>UK</h3></li>
+           <li><h4>Zzzzapp Wireless ltd</h4><h3>Bulgaria</h3></li>
+            <li><h4>Bark</h4><h3>Serbia</h3></li>
+             <li><h4>Social Spot</h4><h3>Macedonia</h3></li>
+<li><h4>TourVia.me</h4><h3>Montenegro</h3></li>
+           <li><h4>TruckTrack </h4><h3>Serbia </h3></li>
+            <li><h4>StreamArena</h4><h3>Serbia</h3></li>
+             <li><h4>LovelyHeroku</h4><h3>Croatia</h3></li>
+        </ul>
+			
+		</section>
+	</article>
+
+
+      <nav>
+		<a class='button backTo nanaslovnu'>Back</a>
+		<h1>Partners</h1>
+	</nav>
+	<article id='partners' class='next fps'>
+		<section>
+        <h2>Partners:</h2>
+        <ul class="list preskoci">
+        <li><img src="slike/partners/1.png"/></li>
+        <li><img src="slike/partners/2.png"/></li>
+        <li><img src="slike/partners/3.png"/></li>
+        <li><img src="slike/partners/4.png"/></li>
+        </ul>
+        <h2>Production Partners:</h2>
+        <ul class="list preskoci">
+        <li><img src="slike/partners/5.png"/></li>
+        <li><img src="slike/partners/6.png"/></li>
+        <li><img src="slike/partners/7.png"/></li>
+        <li><img src="slike/partners/8.png"/></li>
+        <li><img src="slike/partners/9.png"/></li>
+        <li><img src="slike/partners/10.png"/></li>
+        <li><img src="slike/partners/11.png"/></li>
+        </ul>
+        <h2>Media Partners:</h2>
+        <ul class="list preskoci">
+        <li><img src="slike/partners/12.png"/></li>
+        <li><img src="slike/partners/13.png"/></li>
+        <li><img src="slike/partners/14.png"/></li>
+        <li><img src="slike/partners/15.png"/></li>
+        <li><img src="slike/partners/16.png"/></li>
+        <li><img src="slike/partners/17.png"/></li>
+        <li><img src="slike/partners/18.png"/></li>
+        <li><img src="slike/partners/19.png"/></li>
+        <li><img src="slike/partners/20.png"/></li>
+        </ul>
+	
+			
+		</section>
+	</article>
+
+</body>
+</html>
